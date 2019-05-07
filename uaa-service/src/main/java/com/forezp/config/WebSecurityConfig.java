@@ -14,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.servlet.http.HttpServletResponse;
 
 
-
 @Configuration
 class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -27,18 +26,19 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .csrf().disable()
+                .csrf().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-            .and()
+                .and()
                 .authorizeRequests()
                 .antMatchers("/**").authenticated()
-            .and()
+                .and()
                 .httpBasic();
     }
 
     @Autowired
     UserServiceDetail userServiceDetail;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userServiceDetail)
